@@ -1,0 +1,18 @@
+body {
+  background-color: #483d8b;
+  color: white;
+  padding-left: 30px;
+}
+
+h1 {
+  font-weight: bold;
+  font-style: oblique;
+}
+
+.toDoList {
+
+}
+
+button:hover {
+  font-weight: 800;
+}
