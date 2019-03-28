@@ -1,50 +1,44 @@
 function onReady() {
+  const toDos = [];
   const addToDoForm = document.getElementById('addToDoForm');
-  const newToDoText = document.getElementById('newToDoText');
-  const toDoList = document.getElementById('toDoList');
 
-  addToDoForm.addEventListener('submit',
-    function(event) {
-      event.preventDefault();
+  function createNewToDo() {
+    const newToDoText = document.getElementById('newToDoText');
+    if (!newToDoText.value) { return; }
+    
+    toDos.push({
+      title: newToDoText.value,
+      complete: false
+    });
+    newToDoText.value = '';
 
-      // get the text
-      let title = newToDoText.value;
+    renderTheUI();
+  }
 
-      // create a new li
-      let newLi = document.createElement('li');
+  function renderTheUI() {
+    const toDoList = document.getElementById('toDoList');
 
-      // create a new input
-      let checkbox = document.createElement('input');
+    toDoList.textContent = '';
 
-      // create delete button
-      let deleteBtn = document.createElement('button');
-
-      // set the input's type to checkbox
+    toDos.forEach(function(toDo) {
+      const newLi = document.createElement('li');
+      const checkbox = document.createElement('input');
       checkbox.type = "checkbox";
 
-      // set the title
-      newLi.textContent = title;
+      newLi.textContent = toDo.title;
 
-      // attach the checkbox to the li
-      newLi.appendChild(checkbox);
-
-      // attach delete button
-      newLi.appendChild(deleteBtn);
-      deleteBtn.textContent = "Delete";
-
-      // attach the li to the ul
       toDoList.appendChild(newLi);
+      newLi.appendChild(checkbox);
+    });
+  }
 
-      // empty the input
-      newToDoText.value = '';
+  addToDoForm.addEventListener('submit', event => {
+    event.preventDefault();
+    createNewToDo();
+});
 
-      // delete li
-      deleteBtn.addEventListener('click',
-        function (event) {
-          newLi.remove();
-        });
-
-})}
+  renderTheUI();
+}
 
 window.onload = function() {
   onReady();
